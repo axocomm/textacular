@@ -1,10 +1,10 @@
 package edu.drexel.tm.cs338.textacular;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
 
 /**
  * The class ArticlePanel.
@@ -66,11 +66,6 @@ public class ArticlePanel extends TemplatePanel {
 	private JTextArea txtContent;
 	
 	/**
-	 * The text components.
-	 */
-	private JTextComponent[] textComponents;
-
-	/**
 	 * Instantiate a new ArticlePanel.
 	 */
 	public ArticlePanel() {
@@ -81,7 +76,7 @@ public class ArticlePanel extends TemplatePanel {
 		lblDate = new JLabel("Date");
 		lblContent = new JLabel("Content");
 		
-		textComponents = new JTextComponent[] {
+		inputs = new JComponent[] {
 				txtTitle = new JTextField(20),
 				txtAuthor = new JTextField(20),
 				txtDate = new JTextField(20),
@@ -96,23 +91,5 @@ public class ArticlePanel extends TemplatePanel {
 		add(txtDate, "wrap");
 		add(lblContent);
 		add(new JScrollPane(txtContent), "wrap");
-	}
-
-	@Override
-	public boolean checkInputs() {
-		for (JTextComponent textComponent : textComponents) {
-			if (textComponent.getText().length() <= 0) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public void resetInputs() {
-		for (JTextComponent textComponent : textComponents) {
-			textComponent.setText("");
-		}
 	}
 }
