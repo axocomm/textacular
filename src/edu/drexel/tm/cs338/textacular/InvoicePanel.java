@@ -75,6 +75,17 @@ class InvoiceRowTableModel extends AbstractTableModel {
 			return null;
 		}
 	}
+	
+	public void setValueAt(Object val, int row, int col) {
+		HourRow hourRow = (HourRow) val;
+		data.set(row, hourRow);
+		fireTableCellUpdated(row, col);
+	}
+	
+	public void insert(HourRow hourRow) {
+		data.add(hourRow);
+		fireTableCellUpdated(data.size() - 1, -1);
+	}
 }
 
 public class InvoicePanel extends TemplatePanel {
@@ -124,6 +135,7 @@ public class InvoicePanel extends TemplatePanel {
 		tableModel = new InvoiceRowTableModel();
 		// tableModel.addTableModelListener(l);
 		tblEntries.setModel(tableModel);
+		tableModel.insert(new HourRow("bar", 12.0));
 		
 		add(lblCompany);
 		add(txtCompany);
