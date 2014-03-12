@@ -28,7 +28,8 @@ public class ProjectFrame extends JFrame {
 	private JButton btnClear;
 	private JButton btnOptions;
 	
-	private TemplatePanel[] panels = { new LetterPanel() };
+	private TemplatePanel[] panels = { 
+			new LetterPanel(), new ArticlePanel() };
 	
 	public ProjectFrame() {
 		super("TeXtacular");
