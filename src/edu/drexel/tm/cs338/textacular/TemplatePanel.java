@@ -1,6 +1,7 @@
 package edu.drexel.tm.cs338.textacular;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.JTextComponent;
 
@@ -37,6 +38,11 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateFilename;
 	
 	/**
+	 * The template contents.
+	 */
+	private String templateContents;
+	
+	/**
 	 * The TeX handler.
 	 */
 	private TeXHandler texHandler;
@@ -64,9 +70,7 @@ public abstract class TemplatePanel extends JPanel {
 		
 		texHandler = new TeXHandler(TEMPLATE_DIR, templateFilename);
 		
-		if (texHandler.checkTemplateFile()) {
-			System.out.println(texHandler.readTemplateFile());
-		}
+		prepare();
 	}
 	
 	/**
@@ -85,6 +89,19 @@ public abstract class TemplatePanel extends JPanel {
 	 */
 	protected String getTemplateFilename() {
 		return templateFilename;
+	}
+	
+	/**
+	 * Set the template contents.
+	 */
+	protected void prepare() {
+		if (texHandler.checkTemplateFile()) {
+			templateContents = texHandler.readTemplateFile();
+		} else {
+			JOptionPane.showMessageDialog(this, "Could not read template contents.",
+					"Template Error", JOptionPane.ERROR_MESSAGE);
+			templateContents = "";
+		}
 	}
 	
 	/**
