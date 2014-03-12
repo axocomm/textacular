@@ -43,11 +43,6 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateFilename;
 	
 	/**
-	 * The template contents.
-	 */
-	private String templateContents;
-	
-	/**
 	 * The TeX handler.
 	 */
 	private TeXHandler texHandler;
@@ -102,12 +97,9 @@ public abstract class TemplatePanel extends JPanel {
 	 * Set the template contents.
 	 */
 	protected void prepare() {
-		if (texHandler.checkTemplateFile()) {
-			templateContents = texHandler.readTemplateFile();
-		} else {
+		if (texHandler.getTemplateContents().length() <= 0) {
 			JOptionPane.showMessageDialog(this, "Could not read template contents.",
 					"Template Error", JOptionPane.ERROR_MESSAGE);
-			templateContents = "";
 		}
 	}
 	
@@ -115,6 +107,7 @@ public abstract class TemplatePanel extends JPanel {
 	 * Add the variables.
 	 */
 	protected void addVariables() {
+		String templateContents = texHandler.getTemplateContents();
 		if (templateContents.length() <= 0) {
 			return;
 		}

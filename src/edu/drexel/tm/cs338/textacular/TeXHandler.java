@@ -26,6 +26,16 @@ public class TeXHandler {
 	private String filename;
 	
 	/**
+	 * The template file contents.
+	 */
+	private String templateContents;
+	
+	/**
+	 * The prepared contents.
+	 */
+	private String preparedContents;
+	
+	/**
 	 * Instantiate a new TeXHandler.
 	 * 
 	 * @param directory the directory
@@ -34,6 +44,8 @@ public class TeXHandler {
 	public TeXHandler(String directory, String filename) {
 		this.directory = directory;
 		this.filename = filename;
+		
+		templateContents = checkTemplateFile() ? readTemplateFile() : "";
 	}
 	
 	/**
@@ -44,6 +56,24 @@ public class TeXHandler {
 	protected boolean checkTemplateFile() {
 		File sourceFile = new File(String.format("%s/%s", directory, filename));
 		return sourceFile.exists() && !sourceFile.isDirectory();
+	}
+	
+	/**
+	 * Get the template contents.
+	 * 
+	 * @return the template contents
+	 */
+	protected String getTemplateContents() {
+		return templateContents;
+	}
+	
+	/**
+	 * Prepare the new TeX file.
+	 * 
+	 * @param newContents the contents with input variables
+	 */
+	protected void prepareContents(String newContents) {
+		this.preparedContents = newContents;
 	}
 	
 	/**
