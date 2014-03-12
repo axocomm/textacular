@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -102,10 +103,10 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		
 		add(tabbedPane);
 		add(buttonsPanel, BorderLayout.SOUTH);
-		add(previewPanel, BorderLayout.EAST);
+		add(new JScrollPane(previewPanel), BorderLayout.EAST);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
+		setSize(1024, 768);
 	}
 	
 	/**
