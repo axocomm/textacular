@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 /**
  * The class TeXHandler.
@@ -20,9 +19,20 @@ import java.io.PrintWriter;
  */
 public class TeXHandler {
 	
+	/**
+	 * The temp file prefix.
+	 */
 	private static final String PREFIX = "textacular";
 	
-	private static final String JOBNAME = "res/output/output";
+	/**
+	 * The output directory.
+	 */
+	private static final String OUTDIR = "res/output";
+	
+	/**
+	 * The job name for latexmk.
+	 */
+	private static final String JOBNAME = "output";
 	
 	/**
 	 * The directory.
@@ -101,7 +111,7 @@ public class TeXHandler {
 	 */
 	protected void compile() throws IOException, InterruptedException {
 		System.out.println(texFile.getAbsolutePath());
-		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -jobname=%s %s", JOBNAME, texFile.getAbsolutePath()));
+		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -jobname=%s/%s %s", OUTDIR, JOBNAME, texFile.getAbsolutePath()));
 		p.waitFor();
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -109,6 +119,13 @@ public class TeXHandler {
 		while ((line = br.readLine()) != null) {
 			System.out.println(line);
 		}
+	}
+	
+	/**
+	 * Remove compiled and intermediate files.
+	 */
+	protected void cleanup() {
+		
 	}
 	
 	/**
