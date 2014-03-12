@@ -123,9 +123,11 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCompile) {
-			System.out.println("Compile pressed");
+			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
+			System.out.println(panel.checkInputs());
 		} else if (e.getSource() == btnClear) {
-			System.out.println("Reset pressed");
+			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
+			panel.resetInputs();
 		} else if (e.getSource() == btnOptions) {
 			System.out.println("Options pressed");
 		}
