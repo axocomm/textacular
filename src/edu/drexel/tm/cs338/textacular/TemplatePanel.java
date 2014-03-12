@@ -5,12 +5,20 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 public abstract class TemplatePanel extends JPanel {
-	public TemplatePanel() {
-		super();
+	private String templateName;
+	
+	public TemplatePanel(String templateName) {
+		this(templateName, new MigLayout());
 	}
 	
-	public TemplatePanel(MigLayout layout) {
+	public TemplatePanel(String templateName, MigLayout layout) {
 		super(layout);
+		
+		this.templateName = templateName;
+	}
+	
+	protected String getTemplateName() {
+		return templateName;
 	}
 	
 	public abstract boolean checkInputs();

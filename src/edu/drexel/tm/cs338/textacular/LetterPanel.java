@@ -86,7 +86,7 @@ public class LetterPanel extends TemplatePanel {
 	 * Instantiate a new LetterPanel.
 	 */
 	public LetterPanel() {
-		super(new MigLayout("wrap 4"));
+		super("Letter", new MigLayout("wrap 4"));
 		
 		lblSignature = new JLabel("Signature");
 		lblAddress = new JLabel("Address");
