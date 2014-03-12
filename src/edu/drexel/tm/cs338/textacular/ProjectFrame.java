@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -25,6 +26,16 @@ import net.miginfocom.swing.MigLayout;
  * @author Trevor Maglione <tm@cs.drexel.edu>
  */
 public class ProjectFrame extends JFrame implements ActionListener {
+	
+	/**
+	 * The width of the frame.
+	 */
+	protected static final int WIDTH = 1200;
+	
+	/**
+	 * The height of the frame.
+	 */
+	protected static final int HEIGHT = 800;
 	
 	/**
 	 * The menu bar.
@@ -47,9 +58,19 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	private JTabbedPane tabbedPane;
 	
 	/**
+	 * The template panel.
+	 */
+	private JPanel templatesPanel;
+	
+	/**
 	 * The bottom buttons panel.
 	 */
 	private JPanel buttonsPanel;
+	
+	/**
+	 * The preview panel.
+	 */
+	private JPanel previewPanel;
 	
 	/**
 	 * The compile button.
@@ -88,16 +109,23 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		(btnClear = new JButton("Clear")).addActionListener(this);
 		(btnOptions = new JButton("Options")).addActionListener(this);
 		
+		templatesPanel = new JPanel(new MigLayout());
+		templatesPanel.add(tabbedPane);
+		
 		buttonsPanel = new JPanel(new MigLayout());
 		buttonsPanel.add(btnCompile);
 		buttonsPanel.add(btnClear);
 		buttonsPanel.add(btnOptions, "gapleft 30");
 		
-		add(tabbedPane);
+		previewPanel = new PreviewPanel();
+		previewPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		add(templatesPanel);
 		add(buttonsPanel, BorderLayout.SOUTH);
+		add(previewPanel, BorderLayout.EAST);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
+		setSize(WIDTH, HEIGHT);
 	}
 	
 	/**
@@ -130,6 +158,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 				if (panel.prepareHandler()) {
 					if (panel.compile()) {
 						System.out.println("Success");
+						((PreviewPanel) previewPanel).refresh();
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
