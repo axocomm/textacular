@@ -1,5 +1,7 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.io.File;
+
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
@@ -13,6 +15,11 @@ import net.miginfocom.swing.MigLayout;
  * @author Trevor Maglione <tm@cs.drexel.edu>
  */
 public abstract class TemplatePanel extends JPanel {
+	
+	/**
+	 * The template file directory.
+	 */
+	protected static final String TEMPLATE_DIR = "res/templates";
 	
 	/**
 	 * The template name.
@@ -44,6 +51,8 @@ public abstract class TemplatePanel extends JPanel {
 		
 		this.templateName = templateName;
 		this.templateFilename = templateFilename;
+		
+		System.out.println(checkTemplateFile());
 	}
 	
 	/**
@@ -63,6 +72,18 @@ public abstract class TemplatePanel extends JPanel {
 	protected String getTemplateFilename() {
 		return templateFilename;
 	}
+	
+	/**
+	 * Determine if the template file exists and is readable.
+	 */
+	private boolean checkTemplateFile() {
+		File templateFile = new File(String.format("%s/%s", TEMPLATE_DIR, getTemplateFilename()));
+		return templateFile.exists() && !templateFile.isDirectory();
+	}
+	
+	/**
+	 * Read the template file.
+	 */
 	
 	/**
 	 * Validate the panel inputs.
