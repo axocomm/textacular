@@ -64,7 +64,7 @@ public class ArticlePanel extends TemplatePanel {
 	 * Instantiate a new ArticlePanel.
 	 */
 	public ArticlePanel() {
-		super("Article");
+		super("Article", "article.tex");
 		
 		lblTitle = new JLabel("Title");
 		lblAuthor = new JLabel("Author");

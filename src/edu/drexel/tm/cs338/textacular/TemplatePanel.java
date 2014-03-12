@@ -20,12 +20,17 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateName;
 	
 	/**
+	 * The template filename.
+	 */
+	private String templateFilename;
+	
+	/**
 	 * Instantiate a new TemplatePanel.
 	 * 
 	 * @param templateName the template name
 	 */
-	public TemplatePanel(String templateName) {
-		this(templateName, new MigLayout());
+	public TemplatePanel(String templateName, String templateFilename) {
+		this(templateName, templateFilename, new MigLayout());
 	}
 	
 	/**
@@ -34,10 +39,11 @@ public abstract class TemplatePanel extends JPanel {
 	 * @param templateName the template name
 	 * @param layout the layout
 	 */
-	public TemplatePanel(String templateName, MigLayout layout) {
+	public TemplatePanel(String templateName, String templateFilename, MigLayout layout) {
 		super(layout);
 		
 		this.templateName = templateName;
+		this.templateFilename = templateFilename;
 	}
 	
 	/**
@@ -47,6 +53,15 @@ public abstract class TemplatePanel extends JPanel {
 	 */
 	protected String getTemplateName() {
 		return templateName;
+	}
+	
+	/**
+	 * Get the template filename.
+	 * 
+	 * @return the template filename
+	 */
+	protected String getTemplateFilename() {
+		return templateFilename;
 	}
 	
 	/**
