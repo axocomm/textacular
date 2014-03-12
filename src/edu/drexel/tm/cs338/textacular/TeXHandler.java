@@ -134,14 +134,14 @@ public class TeXHandler {
 	 */
 	protected void compile() throws IOException, InterruptedException {
 		System.out.println(texFile.getAbsolutePath());
-		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -pdflatex='pdflatex -interaction=nonstopmode' -jobname=%s/%s %s", 
+		Process p = Runtime.getRuntime().exec(String.format("/bin/bash res/bin/compile %s/%s %s",
 				OUTDIR, JOBNAME, texFile.getAbsolutePath()));
 		p.waitFor();
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		String line;
 		while ((line = br.readLine()) != null) {
-			// System.out.println(line);
+			System.out.println(line);
 		}
 	}
 	

@@ -52,6 +52,11 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	private JPanel buttonsPanel;
 	
 	/**
+	 * The preview panel.
+	 */
+	private JPanel previewPanel;
+	
+	/**
 	 * The compile button.
 	 */
 	private JButton btnCompile;
@@ -93,8 +98,11 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		buttonsPanel.add(btnClear);
 		buttonsPanel.add(btnOptions, "gapleft 30");
 		
+		previewPanel = new PreviewPanel();
+		
 		add(tabbedPane);
 		add(buttonsPanel, BorderLayout.SOUTH);
+		add(previewPanel, BorderLayout.EAST);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
@@ -130,6 +138,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 				if (panel.prepareHandler()) {
 					if (panel.compile()) {
 						System.out.println("Success");
+						((PreviewPanel) previewPanel).refresh();
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
