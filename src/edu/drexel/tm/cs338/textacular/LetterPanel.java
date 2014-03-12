@@ -8,24 +8,83 @@ import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * The class LetterPanel.
+ * 
+ * Displays inputs pertaining to letter creation
+ * 
+ * @author Trevor Maglione <tm@cs.drexel.edu>
+ */
 public class LetterPanel extends TemplatePanel {
+	
+	/**
+	 * The signature label.
+	 */
 	private JLabel lblSignature;
+	
+	/**
+	 * The address label.
+	 */
 	private JLabel lblAddress;
+	
+	/**
+	 * The addressee label.
+	 */
 	private JLabel lblTo;
+	
+	/**
+	 * The opening label.
+	 */
 	private JLabel lblOpening;
+	
+	/**
+	 * The content label.
+	 */
 	private JLabel lblContent;
+	
+	/**
+	 * The closing label.
+	 */
 	private JLabel lblClosing;
 	
+	/**
+	 * The text components.
+	 */
 	private JTextComponent[] textComponents;
 	
+	/**
+	 * The signature text field.
+	 */
 	private JTextField txtSignature;
+	
+	/**
+	 * The opening text field.
+	 */
 	private JTextField txtOpening;
+	
+	/**
+	 * The closing text field.
+	 */
 	private JTextField txtClosing;
 	
+	/**
+	 * The writer address text area.
+	 */
 	private JTextArea txtAddress;
+	
+	/**
+	 * The addressee text area.
+	 */
 	private JTextArea txtTo;
+	
+	/**
+	 * The content text area.
+	 */
 	private JTextArea txtContent;
 	
+	/**
+	 * Instantiate a new LetterPanel.
+	 */
 	public LetterPanel() {
 		super(new MigLayout("wrap 4"));
 		
