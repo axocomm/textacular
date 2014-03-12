@@ -1,6 +1,8 @@
 package edu.drexel.tm.cs338.textacular;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -21,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
  * 
  * @author Trevor Maglione <tm@cs.drexel.edu>
  */
-public class ProjectFrame extends JFrame {
+public class ProjectFrame extends JFrame implements ActionListener {
 	
 	/**
 	 * The menu bar.
@@ -81,9 +83,9 @@ public class ProjectFrame extends JFrame {
 		tabbedPane = new JTabbedPane();
 		addTabPanels();
 		
-		btnCompile = new JButton("Compile");
-		btnClear = new JButton("Clear");
-		btnOptions = new JButton("Options");
+		(btnCompile = new JButton("Compile")).addActionListener(this);
+		(btnClear = new JButton("Clear")).addActionListener(this);
+		(btnOptions = new JButton("Options")).addActionListener(this);
 		
 		buttonsPanel = new JPanel(new MigLayout());
 		buttonsPanel.add(btnCompile);
@@ -115,6 +117,17 @@ public class ProjectFrame extends JFrame {
 	private void addTabPanels() {
 		for (TemplatePanel panel : panels) {
 			tabbedPane.add(panel.getTemplateName(), panel);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCompile) {
+			System.out.println("Compile pressed");
+		} else if (e.getSource() == btnClear) {
+			System.out.println("Reset pressed");
+		} else if (e.getSource() == btnOptions) {
+			System.out.println("Options pressed");
 		}
 	}
 }
