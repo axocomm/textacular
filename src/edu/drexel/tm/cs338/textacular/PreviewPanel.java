@@ -39,11 +39,11 @@ class ImagePanel extends JPanel {
 	
 	public ImagePanel(BufferedImage image, double zoomPercentage, int width, int height) {
 		this.image = image;
-		percentage = zoomPercentage / 100.0;
-		zoom = 1.0;
 		this.width = width;
 		this.height = height;
-		// setPreferredSize(new Dimension(width, height));
+		
+		percentage = zoomPercentage / 100.0;
+		zoom = 1.0;
 		setBackground(Color.WHITE);
 	}
 	
@@ -127,7 +127,6 @@ public class PreviewPanel extends JPanel {
 	
 	public PreviewPanel() {
 		super(new MigLayout());
-		// setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		imagePanel = new ImagePanel(image, 10.0, WIDTH, HEIGHT);
 		
@@ -146,7 +145,6 @@ public class PreviewPanel extends JPanel {
 		});
 		
 		buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(Color.WHITE);
 		
 		buttonsPanel.add(btnZoomIn);
 		buttonsPanel.add(btnZoomOut);
