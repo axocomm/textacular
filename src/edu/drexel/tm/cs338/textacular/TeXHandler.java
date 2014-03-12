@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
@@ -20,6 +21,8 @@ import java.io.PrintWriter;
 public class TeXHandler {
 	
 	private static final String PREFIX = "textacular";
+	
+	private static final String JOBNAME = "res/output/output";
 	
 	/**
 	 * The directory.
@@ -52,6 +55,7 @@ public class TeXHandler {
 		this.filename = filename;
 		
 		templateContents = checkTemplateFile() ? readTemplateFile() : "";
+		texFile = null;
 	}
 	
 	/**
@@ -80,12 +84,31 @@ public class TeXHandler {
 	 * @throws IOException 
 	 */
 	protected void prepareContents(String newContents) throws IOException {
-		texFile = File.createTempFile(PREFIX, ".tex");
-		texFile.deleteOnExit();
+		if (texFile == null) {
+			texFile = File.createTempFile(PREFIX, ".tex");
+			texFile.deleteOnExit();
+		}
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(texFile)));
 		bw.write(newContents);
 		bw.close();
+	}
+	
+	/**
+	 * Compile the TeX file.
+	 * @throws IOException 
+	 * @throws InterruptedException 
+	 */
+	protected void compile() throws IOException, InterruptedException {
+		System.out.println(texFile.getAbsolutePath());
+		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -jobname=%s %s", JOBNAME, texFile.getAbsolutePath()));
+		p.waitFor();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String line;
+		while ((line = br.readLine()) != null) {
+			System.out.println(line);
+		}
 	}
 	
 	/**

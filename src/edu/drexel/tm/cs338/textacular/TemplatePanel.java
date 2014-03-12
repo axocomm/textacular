@@ -44,6 +44,11 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateFilename;
 	
 	/**
+	 * The prepared contents.
+	 */
+	private String preparedContents;
+	
+	/**
 	 * The TeX handler.
 	 */
 	private TeXHandler texHandler;
@@ -108,8 +113,8 @@ public abstract class TemplatePanel extends JPanel {
 	 * Add the variables.
 	 */
 	protected void addVariables() {
-		String templateContents = texHandler.getTemplateContents();
-		if (templateContents.length() <= 0) {
+		preparedContents = texHandler.getTemplateContents();
+		if (preparedContents.length() <= 0) {
 			return;
 		}
 		
@@ -119,14 +124,32 @@ public abstract class TemplatePanel extends JPanel {
 			String name = pair.getKey();
 			JComponent input = pair.getValue();
 			String value = getStringValue(input);
-			templateContents = templateContents.replace(String.format(":%s:", name), value);
+			preparedContents = preparedContents.replace(String.format(":%s:", name), value);
 		}
-		
+	}
+	
+	/**
+	 * Prepare the TeXHandler.
+	 */
+	protected boolean prepareHandler() {
 		try {
-			texHandler.prepareContents(templateContents);
+			texHandler.prepareContents(preparedContents);
+			return true;
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
-					"Template Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+	
+	/**
+	 * Compile the new TeX file.
+	 */
+	protected boolean compile() {
+		try {
+			texHandler.compile();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
