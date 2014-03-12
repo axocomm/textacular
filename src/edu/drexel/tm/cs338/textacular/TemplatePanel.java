@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -24,6 +26,11 @@ public abstract class TemplatePanel extends JPanel {
 	 * The template file directory.
 	 */
 	protected static final String TEMPLATE_DIR = "res/templates";
+	
+	/**
+	 * The inputs.
+	 */
+	protected JComponent[] inputs;
 	
 	/**
 	 * The template name.
@@ -91,10 +98,38 @@ public abstract class TemplatePanel extends JPanel {
 	 * 
 	 * @return if inputs are filled completely and correctly
 	 */
-	public abstract boolean checkInputs();
+	protected boolean checkInputs() {
+		for (JComponent input : inputs) {
+			if (!checkInput(input)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	/**
 	 * Reset the panel inputs.
 	 */
-	public abstract void resetInputs();
+	protected void resetInputs() {
+		
+	}
+	
+	/**
+	 * Check an input.
+	 */
+	protected boolean checkInput(JComponent input) {
+		if (input instanceof JTextComponent) {
+			return checkInput((JTextComponent) input);
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Check a text input.
+	 */
+	protected boolean checkInput(JTextComponent input) {
+		return input.getText().length() > 0;
+	}
 }

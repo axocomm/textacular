@@ -1,5 +1,6 @@
 package edu.drexel.tm.cs338.textacular;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -58,11 +59,6 @@ public class LetterPanel extends TemplatePanel {
 	private JLabel lblClosing;
 	
 	/**
-	 * The text components.
-	 */
-	private JTextComponent[] textComponents;
-	
-	/**
 	 * The signature text field.
 	 */
 	private JTextField txtSignature;
@@ -105,7 +101,7 @@ public class LetterPanel extends TemplatePanel {
 		lblContent = new JLabel("Content");
 		lblClosing = new JLabel("Closing");
 		
-		textComponents = new JTextComponent[] {
+		inputs = new JComponent[] {
 				txtSignature = new JTextField(20),
 				txtOpening = new JTextField(20),
 				txtClosing = new JTextField(20),
@@ -126,23 +122,5 @@ public class LetterPanel extends TemplatePanel {
 		add(txtClosing, "wrap");
 		add(lblSignature);
 		add(txtSignature, "wrap");
-	}
-
-	@Override
-	public boolean checkInputs() {
-		for (JTextComponent textComponent : textComponents) {
-			if (textComponent.getText().length() <= 0) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public void resetInputs() {
-		for (JTextComponent textComponent : textComponents) {
-			textComponent.setText("");
-		}
 	}
 }
