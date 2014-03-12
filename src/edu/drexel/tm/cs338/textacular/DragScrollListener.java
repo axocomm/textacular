@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JViewport;
 
 
-public class DragListener extends MouseAdapter {
+public class DragScrollListener extends MouseAdapter {
 	private Cursor dCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 	private Cursor hCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 	
@@ -18,7 +18,7 @@ public class DragListener extends MouseAdapter {
 	
 	private JPanel panel;
 	
-	public DragListener(JPanel panel) {
+	public DragScrollListener(JPanel panel) {
 		this.panel = panel;
 		
 		point = new Point();
