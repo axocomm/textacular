@@ -1,14 +1,47 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+import net.miginfocom.swing.MigLayout;
 
 public class ProjectFrame extends JFrame {
+	private JTabbedPane tabbedPane;
+	
+	private JPanel buttonsPanel;
+	
+	private JButton btnCompile;
+	private JButton btnClear;
+	
+	private TemplatePanel[] panels = { new LetterPanel() };
+	
 	public ProjectFrame() {
 		super("TeXtacular");
+
+		tabbedPane = new JTabbedPane();
+		addTabPanels();
 		
-		add(new LetterPanel());
+		btnCompile = new JButton("Compile");
+		btnClear = new JButton("Clear");
+		
+		buttonsPanel = new JPanel(new MigLayout());
+		buttonsPanel.add(btnCompile);
+		buttonsPanel.add(btnClear);
+		
+		add(tabbedPane);
+		add(buttonsPanel, BorderLayout.SOUTH);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
+	}
+	
+	private void addTabPanels() {
+		for (TemplatePanel panel : panels) {
+			tabbedPane.add(panel.getTemplateName(), panel);
+		}
 	}
 }
