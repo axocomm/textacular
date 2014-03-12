@@ -1,14 +1,10 @@
 package edu.drexel.tm.cs338.textacular;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,19 +22,54 @@ import net.miginfocom.swing.MigLayout;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 
+/**
+ * The class PreviewPanel.
+ * 
+ * Views a (somewhat) zoomable PDF document that can be updated
+ * at any time
+ * 
+ * @author Trevor Maglione <tm@cs.drexel.edu>
+ */
 public class PreviewPanel extends JPanel {
+	
+	/**
+	 * The panel width.
+	 */
 	protected static final int WIDTH = 600;
+	
+	/**
+	 * The panel height.
+	 */
 	protected static final int HEIGHT = 640;
 	
+	/**
+	 * The image rendered from PDF.
+	 */
 	private BufferedImage image;
 	
+	/**
+	 * The zoom in button.
+	 */
 	private JButton btnZoomIn;
+	
+	/**
+	 * The zoom out button.
+	 */
 	private JButton btnZoomOut;
 	
+	/**
+	 * The image panel.
+	 */
 	private ImagePanel imagePanel;
 	
+	/**
+	 * The buttons panel.
+	 */
 	private JPanel buttonsPanel;
 	
+	/**
+	 * Instantiate a new PreviewPanel.
+	 */
 	public PreviewPanel() {
 		super(new MigLayout());
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -74,6 +105,9 @@ public class PreviewPanel extends JPanel {
 		add(buttonsPanel, "dock south");
 	}
 	
+	/**
+	 * Refresh the image.
+	 */
 	public void refresh() {
 		if (loadPdf()) {
 			imagePanel.setImage(image);
@@ -82,6 +116,11 @@ public class PreviewPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Load a PDF into a BufferedImage.
+	 * 
+	 * @return if the process was successful
+	 */
 	protected boolean loadPdf() {
 		String filename = "res/output/output.pdf";
 		File f = new File(filename);
@@ -113,6 +152,12 @@ public class PreviewPanel extends JPanel {
 		return false;
 	}
 	
+	/**
+	 * Convert an Image to a BufferedImage.
+	 * 
+	 * @param img the Image
+	 * @return a BufferedImage
+	 */
 	protected BufferedImage getBufferedImage(Image img) {
 		if (img instanceof BufferedImage) {
 			return (BufferedImage) img;
