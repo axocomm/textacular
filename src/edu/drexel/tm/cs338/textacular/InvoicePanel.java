@@ -1,9 +1,6 @@
 package edu.drexel.tm.cs338.textacular;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
