@@ -48,6 +48,11 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	private JTabbedPane tabbedPane;
 	
 	/**
+	 * The template panel.
+	 */
+	private JPanel templatesPanel;
+	
+	/**
 	 * The bottom buttons panel.
 	 */
 	private JPanel buttonsPanel;
@@ -94,6 +99,9 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		(btnClear = new JButton("Clear")).addActionListener(this);
 		(btnOptions = new JButton("Options")).addActionListener(this);
 		
+		templatesPanel = new JPanel(new MigLayout());
+		templatesPanel.add(tabbedPane);
+		
 		buttonsPanel = new JPanel(new MigLayout());
 		buttonsPanel.add(btnCompile);
 		buttonsPanel.add(btnClear);
@@ -101,7 +109,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		
 		previewPanel = new PreviewPanel();
 		
-		add(tabbedPane);
+		add(templatesPanel);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		add(new JScrollPane(previewPanel), BorderLayout.EAST);
 		
