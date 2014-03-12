@@ -16,6 +16,16 @@ import javax.swing.text.JTextComponent;
 public class ArticlePanel extends TemplatePanel {
 	
 	/**
+	 * The template name.
+	 */
+	private static final String TEMPLATE_NAME = "Article";
+	
+	/**
+	 * The template filename.
+	 */
+	private static final String TEMPLATE_FILENAME = "article.tex";
+	
+	/**
 	 * The title label.
 	 */
 	private JLabel lblTitle;
@@ -64,7 +74,7 @@ public class ArticlePanel extends TemplatePanel {
 	 * Instantiate a new ArticlePanel.
 	 */
 	public ArticlePanel() {
-		super("Article", "article.tex");
+		super(TEMPLATE_NAME, TEMPLATE_FILENAME);
 		
 		lblTitle = new JLabel("Title");
 		lblAuthor = new JLabel("Author");

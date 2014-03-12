@@ -18,6 +18,16 @@ import net.miginfocom.swing.MigLayout;
 public class LetterPanel extends TemplatePanel {
 	
 	/**
+	 * The template name.
+	 */
+	private static final String TEMPLATE_NAME = "Letter";
+	
+	/**
+	 * The template filename.
+	 */
+	private static final String TEMPLATE_FILENAME = "letter.tex";
+	
+	/**
 	 * The signature label.
 	 */
 	private JLabel lblSignature;
@@ -86,7 +96,7 @@ public class LetterPanel extends TemplatePanel {
 	 * Instantiate a new LetterPanel.
 	 */
 	public LetterPanel() {
-		super("Letter", "letter.tex", new MigLayout("wrap 4"));
+		super(TEMPLATE_NAME, TEMPLATE_FILENAME, new MigLayout("wrap 4"));
 		
 		lblSignature = new JLabel("Signature");
 		lblAddress = new JLabel("Address");
