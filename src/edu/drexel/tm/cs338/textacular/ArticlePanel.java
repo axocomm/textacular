@@ -6,21 +6,63 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
+/**
+ * The class ArticlePanel.
+ * 
+ * Displays inputs for components of a basic article
+ *
+ * @author Trevor Maglione <tm@cs.drexel.edu>
+ */
 public class ArticlePanel extends TemplatePanel {
 	
+	/**
+	 * The title label.
+	 */
 	private JLabel lblTitle;
+	
+	/**
+	 * The author label.
+	 */
 	private JLabel lblAuthor;
+	
+	/**
+	 * The date label.
+	 */
 	private JLabel lblDate;
+	
+	/**
+	 * The content label.
+	 */
 	private JLabel lblContent;
 	
+	/**
+	 * The title text field.
+	 */
 	private JTextField txtTitle;
+	
+	/**
+	 * The author text field.
+	 */
 	private JTextField txtAuthor;
+	
+	/**
+	 * The date text field.
+	 */
 	private JTextField txtDate;
 	
+	/**
+	 * The content text area.
+	 */
 	private JTextArea txtContent;
 	
+	/**
+	 * The text components.
+	 */
 	private JTextComponent[] textComponents;
 
+	/**
+	 * Instantiate a new ArticlePanel.
+	 */
 	public ArticlePanel() {
 		super("Article");
 		
