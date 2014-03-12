@@ -36,6 +36,11 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateFilename;
 	
 	/**
+	 * The TeX handler.
+	 */
+	private TeXHandler texHandler;
+	
+	/**
 	 * Instantiate a new TemplatePanel.
 	 * 
 	 * @param templateName the template name
@@ -56,8 +61,10 @@ public abstract class TemplatePanel extends JPanel {
 		this.templateName = templateName;
 		this.templateFilename = templateFilename;
 		
-		if (checkTemplateFile()) {
-			System.out.println(readTemplateFile());
+		texHandler = new TeXHandler(TEMPLATE_DIR, templateFilename);
+		
+		if (texHandler.checkTemplateFile()) {
+			System.out.println(texHandler.readTemplateFile());
 		}
 	}
 	
@@ -77,45 +84,6 @@ public abstract class TemplatePanel extends JPanel {
 	 */
 	protected String getTemplateFilename() {
 		return templateFilename;
-	}
-	
-	/**
-	 * Determine if the template file exists and is readable.
-	 * 
-	 * @return if the file exists and is not a directory
-	 */
-	protected boolean checkTemplateFile() {
-		File templateFile = new File(String.format("%s/%s", TEMPLATE_DIR, getTemplateFilename()));
-		return templateFile.exists() && !templateFile.isDirectory();
-	}
-	
-	/**
-	 * Read the template file.
-	 * 
-	 * @return the contents of the template file, null on error
-	 */
-	protected String readTemplateFile() {
-		BufferedReader br;
-		
-		try {
-			br = new BufferedReader(new FileReader(String.format("%s/%s", TEMPLATE_DIR, getTemplateFilename())));
-			StringBuilder sb = new StringBuilder();
-			String line;
-			
-			while ((line = br.readLine()) != null) {
-				sb.append(String.format("%s%n", line));
-			}
-
-			br.close();
-			
-			return sb.toString();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
 	}
 	
 	/**
