@@ -119,7 +119,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		buttonsPanel.add(btnOptions, "gapleft 30");
 		
 		previewPanel = new PreviewPanel();
-		previewPanel.setBorder(new EmptyBorder(3, 3, 3, 30));
+		previewPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		add(templatesPanel);
 		add(buttonsPanel, BorderLayout.SOUTH);

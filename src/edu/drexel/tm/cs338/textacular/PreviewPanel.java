@@ -17,9 +17,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
@@ -43,6 +41,7 @@ class ImagePanel extends JPanel {
 		this.width = width;
 		this.height = height;
 		setPreferredSize(new Dimension(width, height));
+		setBackground(Color.WHITE);
 	}
 	
 	public void setImage(BufferedImage image) {
@@ -112,7 +111,7 @@ public class PreviewPanel extends JPanel {
 	
 	public PreviewPanel() {
 		super(new MigLayout());
-		setBackground(Color.WHITE);
+		// setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		imagePanel = new ImagePanel(image, 10.0, WIDTH, HEIGHT);
 		
