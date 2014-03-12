@@ -91,7 +91,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	 * The template panels.
 	 */
 	private TemplatePanel[] panels = { 
-			new LetterPanel(), new ArticlePanel() };
+			new LetterPanel(), new ArticlePanel(), new InvoicePanel() };
 	
 	/**
 	 * Instantiate a new ProjectFrame.
