@@ -1,5 +1,6 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,9 +44,9 @@ public abstract class TemplatePanel extends JPanel {
 	private String templateFilename;
 	
 	/**
-	 * The template contents.
+	 * The prepared contents.
 	 */
-	private String templateContents;
+	private String preparedContents;
 	
 	/**
 	 * The TeX handler.
@@ -102,12 +103,9 @@ public abstract class TemplatePanel extends JPanel {
 	 * Set the template contents.
 	 */
 	protected void prepare() {
-		if (texHandler.checkTemplateFile()) {
-			templateContents = texHandler.readTemplateFile();
-		} else {
+		if (texHandler.getTemplateContents().length() <= 0) {
 			JOptionPane.showMessageDialog(this, "Could not read template contents.",
 					"Template Error", JOptionPane.ERROR_MESSAGE);
-			templateContents = "";
 		}
 	}
 	
@@ -115,7 +113,8 @@ public abstract class TemplatePanel extends JPanel {
 	 * Add the variables.
 	 */
 	protected void addVariables() {
-		if (templateContents.length() <= 0) {
+		preparedContents = texHandler.getTemplateContents();
+		if (preparedContents.length() <= 0) {
 			return;
 		}
 		
@@ -125,10 +124,40 @@ public abstract class TemplatePanel extends JPanel {
 			String name = pair.getKey();
 			JComponent input = pair.getValue();
 			String value = getStringValue(input);
-			templateContents = templateContents.replace(String.format(":%s:", name), value);
+			preparedContents = preparedContents.replace(String.format(":%s:", name), value);
 		}
-		
-		System.out.println(templateContents);
+	}
+	
+	/**
+	 * Prepare the TeXHandler.
+	 */
+	protected boolean prepareHandler() {
+		try {
+			texHandler.prepareContents(preparedContents);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Compile the new TeX file.
+	 */
+	protected boolean compile() {
+		try {
+			texHandler.compile();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Cleanup.
+	 */
+	protected void cleanup() {
+		texHandler.cleanup();
 	}
 	
 	/**

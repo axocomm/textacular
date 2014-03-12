@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -126,6 +127,14 @@ public class ProjectFrame extends JFrame implements ActionListener {
 			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
 			if (panel.checkInputs()) {
 				panel.addVariables();
+				if (panel.prepareHandler()) {
+					if (panel.compile()) {
+						System.out.println("Success");
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
+							"Template Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		} else if (e.getSource() == btnClear) {
 			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
@@ -133,6 +142,10 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnOptions) {
 			System.out.println("Options pressed");
 		} else if (e.getSource() == itmQuit) {
+			for (TemplatePanel panel : panels) {
+				panel.cleanup();
+			}
+			
 			dispose();
 		}
 	}
