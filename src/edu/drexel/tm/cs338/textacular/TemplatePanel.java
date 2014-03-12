@@ -112,7 +112,27 @@ public abstract class TemplatePanel extends JPanel {
 	 * Reset the panel inputs.
 	 */
 	protected void resetInputs() {
-		
+		for (JComponent input : inputs) {
+			resetInput(input);
+		}
+	}
+	
+	/**
+	 * Reset an input.
+	 */
+	protected void resetInput(JComponent input) {
+		if (input instanceof JTextComponent) {
+			resetInput((JTextComponent) input);
+		} else {
+			;
+		}
+	}
+	
+	/**
+	 * Reset a text input.
+	 */
+	protected void resetInput(JTextComponent input) {
+		input.setText("");
 	}
 	
 	/**
