@@ -1,0 +1,18 @@
+#!/bin/bash
+
+usage() {
+    cat <<eof
+Usage: `basename $0` [output path] [source file]
+eof
+
+    exit 1
+}
+
+[ $# -eq 2 ] || usage
+
+path="$1"
+src="$2"
+
+latexmk -gg -pdf -pdflatex='pdflatex -interaction=nonstopmode' -jobname=$path $src
+
+exit $?
