@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The class TeXHandler.
@@ -105,6 +107,26 @@ public class TeXHandler {
 	}
 	
 	/**
+	 * Escape special characters in input.
+	 * 
+	 * @param str the input String
+	 * @return an escaped String or the original if an exception occurs
+	 */
+	protected String escapeSpecialChars(String str) {
+		String specialChars = "([#\\$\\%\\^&_\\{\\}~])";
+		Pattern pattern = Pattern.compile(specialChars);
+		try {
+			Matcher matcher = pattern.matcher(str);
+			String escaped = matcher.replaceAll("\\\\$1");
+			return escaped;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return str;
+	}
+	
+	/**
 	 * Compile the TeX file.
 	 * @throws IOException 
 	 * @throws InterruptedException 
@@ -117,7 +139,7 @@ public class TeXHandler {
 		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line;
 		while ((line = br.readLine()) != null) {
-			System.out.println(line);
+			// System.out.println(line);
 		}
 	}
 	

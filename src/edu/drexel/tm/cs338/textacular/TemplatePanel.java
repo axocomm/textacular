@@ -124,6 +124,7 @@ public abstract class TemplatePanel extends JPanel {
 			String name = pair.getKey();
 			JComponent input = pair.getValue();
 			String value = getStringValue(input);
+			// value = escapeSpecialChars(value);
 			preparedContents = preparedContents.replace(String.format(":%s:", name), value);
 		}
 	}
