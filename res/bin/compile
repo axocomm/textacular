@@ -10,9 +10,18 @@ eof
 
 [ $# -eq 2 ] || usage
 
+if [ -x "/usr/bin/latexmk" ]; then
+    PREFIX=/usr/bin
+elif [ -x "/usr/texbin/latexmk" ]; then
+    PREFIX=/usr/texbin
+else
+    echo 'latexmk not found' >&2
+    exit 1
+fi
+
 path="$1"
 src="$2"
 
-latexmk -gg -pdf -pdflatex='pdflatex -interaction=nonstopmode' -jobname=$path $src
+$PREFIX/latexmk -gg -pdf -pdflatex="$PREFIX/pdflatex -interaction=nonstopmode" -jobname=$path $src
 
 exit $?
