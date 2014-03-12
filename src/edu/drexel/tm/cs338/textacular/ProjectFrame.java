@@ -123,7 +123,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		
 		add(templatesPanel);
 		add(buttonsPanel, BorderLayout.SOUTH);
-		add(new JScrollPane(previewPanel), BorderLayout.EAST);
+		add(previewPanel, BorderLayout.EAST);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(WIDTH, HEIGHT);
