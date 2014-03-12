@@ -124,7 +124,9 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCompile) {
 			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
-			System.out.println(panel.checkInputs());
+			if (panel.checkInputs()) {
+				panel.addVariables();
+			}
 		} else if (e.getSource() == btnClear) {
 			TemplatePanel panel = (TemplatePanel) tabbedPane.getSelectedComponent();
 			panel.resetInputs();

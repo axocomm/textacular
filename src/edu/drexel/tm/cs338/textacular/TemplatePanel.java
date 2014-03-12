@@ -115,7 +115,38 @@ public abstract class TemplatePanel extends JPanel {
 	 * Add the variables.
 	 */
 	protected void addVariables() {
+		if (templateContents.length() <= 0) {
+			return;
+		}
 		
+		Iterator<Entry<String, JComponent>> it = inputs.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<String, JComponent> pair = it.next();
+			String name = pair.getKey();
+			JComponent input = pair.getValue();
+			String value = getStringValue(input);
+			templateContents = templateContents.replace(String.format(":%s:", name), value);
+		}
+		
+		System.out.println(templateContents);
+	}
+	
+	/**
+	 * Get the value of an input.
+	 */
+	protected String getStringValue(JComponent input) {
+		if (input instanceof JTextComponent) {
+			return getStringValue((JTextComponent) input);
+		} else {
+			return "NONE";
+		}
+	}
+	
+	/**
+	 * Get the value of a text input.
+	 */
+	protected String getStringValue(JTextComponent input) {
+		return input.getText();
 	}
 	
 	/**
