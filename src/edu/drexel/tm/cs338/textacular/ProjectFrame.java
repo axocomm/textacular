@@ -107,7 +107,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		mainMenu = new JMenu("File");
 		menuBar.add(mainMenu);
 		
-		itmQuit = new JMenuItem("Quit", KeyEvent.VK_Q);
+		(itmQuit = new JMenuItem("Quit", KeyEvent.VK_Q)).addActionListener(this);
 		mainMenu.add(itmQuit);
 	}
 	
@@ -130,6 +130,8 @@ public class ProjectFrame extends JFrame implements ActionListener {
 			panel.resetInputs();
 		} else if (e.getSource() == btnOptions) {
 			System.out.println("Options pressed");
+		} else if (e.getSource() == itmQuit) {
+			dispose();
 		}
 	}
 }
