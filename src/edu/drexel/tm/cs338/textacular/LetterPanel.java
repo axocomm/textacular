@@ -101,14 +101,12 @@ public class LetterPanel extends TemplatePanel {
 		lblContent = new JLabel("Content");
 		lblClosing = new JLabel("Closing");
 		
-		inputs = new JComponent[] {
-				txtSignature = new JTextField(20),
-				txtOpening = new JTextField(20),
-				txtClosing = new JTextField(20),
-				txtAddress = new JTextArea(5, 20),
-				txtTo = new JTextArea(5, 20),
-				txtContent = new JTextArea(10, 40)
-		};
+		inputs.put("signature", txtSignature = new JTextField(20));
+		inputs.put("opening", txtOpening = new JTextField(20));
+		inputs.put("closing", txtClosing = new JTextField(20));
+		inputs.put("address", txtAddress = new JTextArea(5, 20));
+		inputs.put("to", txtTo = new JTextArea(5, 20));
+		inputs.put("content", txtContent = new JTextArea(10, 40));
 		
 		add(lblAddress);
 		add(new JScrollPane(txtAddress));

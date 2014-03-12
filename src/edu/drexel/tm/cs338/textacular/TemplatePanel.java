@@ -1,5 +1,8 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,7 +28,7 @@ public abstract class TemplatePanel extends JPanel {
 	/**
 	 * The inputs.
 	 */
-	protected JComponent[] inputs;
+	protected Map<String, JComponent> inputs;
 	
 	/**
 	 * The template name.
@@ -70,6 +73,8 @@ public abstract class TemplatePanel extends JPanel {
 		
 		texHandler = new TeXHandler(TEMPLATE_DIR, templateFilename);
 		
+		inputs = new HashMap<String, JComponent>();
+		
 		prepare();
 	}
 	
@@ -102,6 +107,13 @@ public abstract class TemplatePanel extends JPanel {
 					"Template Error", JOptionPane.ERROR_MESSAGE);
 			templateContents = "";
 		}
+	}
+	
+	/**
+	 * Add the variables.
+	 */
+	protected void addVariables() {
+		
 	}
 	
 	/**

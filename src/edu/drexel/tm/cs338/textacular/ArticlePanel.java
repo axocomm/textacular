@@ -76,12 +76,10 @@ public class ArticlePanel extends TemplatePanel {
 		lblDate = new JLabel("Date");
 		lblContent = new JLabel("Content");
 		
-		inputs = new JComponent[] {
-				txtTitle = new JTextField(20),
-				txtAuthor = new JTextField(20),
-				txtDate = new JTextField(20),
-				txtContent = new JTextArea(10, 40)
-		};
+		inputs.put("title", txtTitle = new JTextField(20));
+		inputs.put("author", txtAuthor = new JTextField(20));
+		inputs.put("date", txtDate = new JTextField(20));
+		inputs.put("content", txtContent = new JTextArea(10, 40));
 		
 		add(lblTitle);
 		add(txtTitle, "wrap");
