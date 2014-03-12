@@ -59,6 +59,11 @@ public class LetterPanel extends TemplatePanel {
 	private JLabel lblClosing;
 	
 	/**
+	 * The date label.
+	 */
+	private JLabel lblDate;
+	
+	/**
 	 * The signature text field.
 	 */
 	private JTextField txtSignature;
@@ -72,6 +77,11 @@ public class LetterPanel extends TemplatePanel {
 	 * The closing text field.
 	 */
 	private JTextField txtClosing;
+	
+	/**
+	 * The date text field.
+	 */
+	private JTextField txtDate;
 	
 	/**
 	 * The writer address text area.
@@ -97,6 +107,7 @@ public class LetterPanel extends TemplatePanel {
 		lblSignature = new JLabel("Signature");
 		lblAddress = new JLabel("Address");
 		lblTo = new JLabel("To");
+		lblDate = new JLabel("Date");
 		lblOpening = new JLabel("Opening");
 		lblContent = new JLabel("Content");
 		lblClosing = new JLabel("Closing");
@@ -105,6 +116,7 @@ public class LetterPanel extends TemplatePanel {
 		inputs.put("opening", txtOpening = new JTextField(20));
 		inputs.put("closing", txtClosing = new JTextField(20));
 		inputs.put("address", txtAddress = new JTextArea(5, 20));
+		inputs.put("date", txtDate = new JTextField(20));
 		inputs.put("to", txtTo = new JTextArea(5, 20));
 		inputs.put("content", txtContent = new JTextArea(10, 40));
 		
@@ -112,6 +124,8 @@ public class LetterPanel extends TemplatePanel {
 		add(new JScrollPane(txtAddress));
 		add(lblTo);
 		add(new JScrollPane(txtTo), "wrap");
+		add(lblDate);
+		add(txtDate, "wrap");
 		add(lblOpening);
 		add(txtOpening, "wrap");
 		add(lblContent);
