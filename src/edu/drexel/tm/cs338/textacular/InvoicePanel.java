@@ -1,10 +1,81 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
+class HourRow {
+	private String note;
+	private double hours;
+	
+	public HourRow(String note, double hours) {
+		this.note = note;
+		this.hours = hours;
+	}
+	
+	public String getNote() {
+		return note;
+	}
+	
+	public double getHours() {
+		return hours;
+	}
+	
+	public void setNote(String note) {
+		this.note = note;
+	}
+	
+	public void setHours(double hours) {
+		this.hours = hours;
+	}
+}
+
+class InvoiceRowTableModel extends AbstractTableModel {
+	
+	private static final int NOTE_INDEX = 0;
+	private static final int HOURS_INDEX = 1;
+
+	private String[] columnNames = { "Note", "Hours" };
+	
+	private ArrayList<HourRow> data;
+	
+	public InvoiceRowTableModel() {
+		data = new ArrayList<HourRow>();
+		data.add(new HourRow("Foo", 10.0));
+	}
+	
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+
+	@Override
+	public int getRowCount() {
+		return data.size();
+	}
+
+	@Override
+	public Object getValueAt(int row, int col) {
+		HourRow hourRow = (HourRow) data.get(row);
+		
+		switch (col) {
+		case NOTE_INDEX:
+			return hourRow.getNote();
+		case HOURS_INDEX:
+			return hourRow.getHours();
+		default:
+			return null;
+		}
+	}
+}
 
 public class InvoicePanel extends TemplatePanel {
 	
@@ -29,6 +100,8 @@ public class InvoicePanel extends TemplatePanel {
 	
 	private JTable tblEntries;
 	
+	private InvoiceRowTableModel tableModel;
+	
 	public InvoicePanel() {
 		super(TEMPLATE_NAME, TEMPLATE_FILENAME);
 		
@@ -48,6 +121,10 @@ public class InvoicePanel extends TemplatePanel {
 		inputs.put("rate", txtRate = new JTextField(20));
 		inputs.put("entries", tblEntries = new JTable());
 		
+		tableModel = new InvoiceRowTableModel();
+		// tableModel.addTableModelListener(l);
+		tblEntries.setModel(tableModel);
+		
 		add(lblCompany);
 		add(txtCompany);
 		add(lblAddress);
@@ -61,6 +138,6 @@ public class InvoicePanel extends TemplatePanel {
 		add(lblRate);
 		add(txtRate, "wrap");
 		add(lblEntries);
-		add(tblEntries);
+		add(new JScrollPane(tblEntries), "wrap");
 	}
 }
