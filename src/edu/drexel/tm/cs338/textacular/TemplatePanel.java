@@ -1,7 +1,9 @@
 package edu.drexel.tm.cs338.textacular;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -122,8 +124,10 @@ public abstract class TemplatePanel extends JPanel {
 	 * @return if inputs are filled completely and correctly
 	 */
 	protected boolean checkInputs() {
-		for (JComponent input : inputs) {
-			if (!checkInput(input)) {
+		Iterator<Entry<String, JComponent>> it = inputs.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<String, JComponent> pair = it.next();
+			if (!checkInput(pair.getValue())) {
 				return false;
 			}
 		}
@@ -135,8 +139,10 @@ public abstract class TemplatePanel extends JPanel {
 	 * Reset the panel inputs.
 	 */
 	protected void resetInputs() {
-		for (JComponent input : inputs) {
-			resetInput(input);
+		Iterator<Entry<String, JComponent>> it = inputs.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<String, JComponent> pair = it.next();
+			resetInput(pair.getValue());
 		}
 	}
 	
