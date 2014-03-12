@@ -2,7 +2,6 @@ package edu.drexel.tm.cs338.textacular;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.Rectangle2D;
@@ -28,14 +27,14 @@ public class PreviewPanel extends JPanel {
 	private JLabel label;
 	
 	public PreviewPanel() {
-		setBackground(Color.RED);
-		setPreferredSize(new Dimension(300, 600));
+		setBackground(Color.WHITE);
+		setPreferredSize(new Dimension(500, 768));
 		
 		icon = new ImageIcon();
 		
 		label = new JLabel();
 		label.setVerticalAlignment(JLabel.TOP);
-		add(new JScrollPane(label));
+		add(label);
 	}
 	
 	public void refresh() {
@@ -64,11 +63,6 @@ public class PreviewPanel extends JPanel {
 				
 				double w = r2d.getWidth();
 				double h = r2d.getHeight();
-				w /= 72.0;
-				h /= 72.0;
-				int res = Toolkit.getDefaultToolkit().getScreenResolution();
-				w *= res;
-				h *= res;
 				
 				image = page.getImage((int) w, (int) h, r2d, null, true, true);
 				
