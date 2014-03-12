@@ -22,4 +22,5 @@ public abstract class TemplatePanel extends JPanel {
 	}
 	
 	public abstract boolean checkInputs();
+	public abstract void resetInputs();
 }

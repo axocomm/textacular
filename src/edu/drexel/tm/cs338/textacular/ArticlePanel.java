@@ -56,4 +56,11 @@ public class ArticlePanel extends TemplatePanel {
 		
 		return true;
 	}
+	
+	@Override
+	public void resetInputs() {
+		for (JTextComponent textComponent : textComponents) {
+			textComponent.setText("");
+		}
+	}
 }
