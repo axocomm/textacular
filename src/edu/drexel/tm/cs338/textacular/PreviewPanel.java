@@ -1,19 +1,13 @@
 package edu.drexel.tm.cs338.textacular;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -26,7 +20,6 @@ import java.nio.channels.FileChannel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -50,8 +43,21 @@ class ImagePanel extends JPanel {
 		zoom = 1.0;
 		this.width = width;
 		this.height = height;
-		setPreferredSize(new Dimension(width, height));
+		// setPreferredSize(new Dimension(width, height));
 		setBackground(Color.WHITE);
+	}
+	
+	public Dimension getPreferredSize() {
+		int w, h;
+		if (image != null) {
+			w = image.getWidth();
+			h = image.getHeight();
+		} else {
+			w = width;
+			h = height;
+		}
+		
+		return new Dimension((int) zoom * w, (int) zoom * h);
 	}
 	
 	public void setImage(BufferedImage image) {
