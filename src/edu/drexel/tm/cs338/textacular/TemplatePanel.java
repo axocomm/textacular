@@ -1,6 +1,10 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -52,7 +56,9 @@ public abstract class TemplatePanel extends JPanel {
 		this.templateName = templateName;
 		this.templateFilename = templateFilename;
 		
-		System.out.println(checkTemplateFile());
+		if (checkTemplateFile()) {
+			System.out.println(readTemplateFile());
+		}
 	}
 	
 	/**
@@ -75,15 +81,42 @@ public abstract class TemplatePanel extends JPanel {
 	
 	/**
 	 * Determine if the template file exists and is readable.
+	 * 
+	 * @return if the file exists and is not a directory
 	 */
-	private boolean checkTemplateFile() {
+	protected boolean checkTemplateFile() {
 		File templateFile = new File(String.format("%s/%s", TEMPLATE_DIR, getTemplateFilename()));
 		return templateFile.exists() && !templateFile.isDirectory();
 	}
 	
 	/**
 	 * Read the template file.
+	 * 
+	 * @return the contents of the template file, null on error
 	 */
+	protected String readTemplateFile() {
+		BufferedReader br;
+		
+		try {
+			br = new BufferedReader(new FileReader(String.format("%s/%s", TEMPLATE_DIR, getTemplateFilename())));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			
+			while ((line = br.readLine()) != null) {
+				sb.append(String.format("%s%n", line));
+			}
+
+			br.close();
+			
+			return sb.toString();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Validate the panel inputs.
