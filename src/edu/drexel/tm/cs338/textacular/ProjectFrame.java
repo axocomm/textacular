@@ -142,6 +142,10 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnOptions) {
 			System.out.println("Options pressed");
 		} else if (e.getSource() == itmQuit) {
+			for (TemplatePanel panel : panels) {
+				panel.cleanup();
+			}
+			
 			dispose();
 		}
 	}

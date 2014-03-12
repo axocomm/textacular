@@ -154,6 +154,13 @@ public abstract class TemplatePanel extends JPanel {
 	}
 	
 	/**
+	 * Cleanup.
+	 */
+	protected void cleanup() {
+		texHandler.cleanup();
+	}
+	
+	/**
 	 * Get the value of an input.
 	 */
 	protected String getStringValue(JComponent input) {

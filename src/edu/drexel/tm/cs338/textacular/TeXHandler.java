@@ -125,7 +125,14 @@ public class TeXHandler {
 	 * Remove compiled and intermediate files.
 	 */
 	protected void cleanup() {
-		
+		String[] extensions = { "aux", "fdb_latexmk", "log", "pdf" };
+		for (String extension : extensions) {
+			File f = new File(String.format("%s/%s.%s", OUTDIR, JOBNAME, extension));
+			System.out.printf("Deleting %s\n", f.getAbsoluteFile());
+			if (f.exists() && !f.isDirectory()) {
+				f.delete();
+			}
+		}
 	}
 	
 	/**
