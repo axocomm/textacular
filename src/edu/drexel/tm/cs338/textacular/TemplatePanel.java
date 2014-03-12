@@ -1,5 +1,6 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -121,7 +122,12 @@ public abstract class TemplatePanel extends JPanel {
 			templateContents = templateContents.replace(String.format(":%s:", name), value);
 		}
 		
-		System.out.println(templateContents);
+		try {
+			texHandler.prepareContents(templateContents);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
+					"Template Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	/**
