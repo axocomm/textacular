@@ -150,6 +150,8 @@ public class PreviewPanel extends JPanel {
 		buttonsPanel.add(btnZoomOut);
 		
 		JScrollPane previewScrollPane = new JScrollPane(imagePanel);
+		previewScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		previewScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		DragListener dragListener = new DragListener(imagePanel);
 		previewScrollPane.getViewport().addMouseMotionListener(dragListener);
 		previewScrollPane.getViewport().addMouseListener(dragListener);
