@@ -5,9 +5,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -31,9 +34,9 @@ class ImagePanel extends JPanel {
 	private int width;
 	private int height;
 	
-	private Image image;
+	private BufferedImage image;
 	
-	public ImagePanel(Image image, double zoomPercentage, int width, int height) {
+	public ImagePanel(BufferedImage image, double zoomPercentage, int width, int height) {
 		this.image = image;
 		percentage = zoomPercentage / 100.0;
 		zoom = 1.0;
@@ -42,16 +45,29 @@ class ImagePanel extends JPanel {
 		setPreferredSize(new Dimension(width, height));
 	}
 	
-	public void setImage(Image image) {
+	public void setImage(BufferedImage image) {
 		this.image = image;
 		repaint();
 		revalidate();
 	}
 	
 	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.scale(zoom, zoom);
-		g2d.drawImage(image, 0, 0, this);
+		super.paintComponent(g);
+		if (image != null) {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+			int w = getWidth();
+			int h = getHeight();
+			int iw = image.getWidth();
+			int ih = image.getHeight();
+			
+			double x = (w - zoom * iw) / 2;
+			double y = (h - zoom * ih) / 2;
+			
+			AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+			at.scale(zoom, zoom);
+			g2d.drawRenderedImage(image, at);
+		}
 	}
 	
 	public void setZoomPercentage(int zoomPercentage) {
@@ -85,7 +101,7 @@ public class PreviewPanel extends JPanel {
 	protected static final int WIDTH = 600;
 	protected static final int HEIGHT = 640;
 	
-	private Image image;
+	private BufferedImage image;
 	
 	private JButton btnZoomIn;
 	private JButton btnZoomOut;
@@ -150,7 +166,7 @@ public class PreviewPanel extends JPanel {
 				double w = r2d.getWidth();
 				double h = r2d.getHeight();
 				
-				image = page.getImage((int) w, (int) h, r2d, null, true, true);
+				image = getBufferedImage(page.getImage((int) w, (int) h, r2d, null, true, true));
 				
 				return true;
 			} catch (IOException e) {
@@ -161,5 +177,19 @@ public class PreviewPanel extends JPanel {
 		}
 		
 		return false;
+	}
+	
+	protected BufferedImage getBufferedImage(Image img) {
+		if (img instanceof BufferedImage) {
+			return (BufferedImage) img;
+		}
+		
+		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = (Graphics2D) bi.getGraphics();
+		g2d.drawImage(img, 0, 0, null);
+		g2d.dispose();
+		
+		return bi;
+		
 	}
 }
