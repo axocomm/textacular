@@ -16,6 +16,7 @@ public class ProjectFrame extends JFrame {
 	
 	private JButton btnCompile;
 	private JButton btnClear;
+	private JButton btnOptions;
 	
 	private TemplatePanel[] panels = { new LetterPanel() };
 	
@@ -27,10 +28,12 @@ public class ProjectFrame extends JFrame {
 		
 		btnCompile = new JButton("Compile");
 		btnClear = new JButton("Clear");
+		btnOptions = new JButton("Options");
 		
 		buttonsPanel = new JPanel(new MigLayout());
 		buttonsPanel.add(btnCompile);
 		buttonsPanel.add(btnClear);
+		buttonsPanel.add(btnOptions, "gapleft 30");
 		
 		add(tabbedPane);
 		add(buttonsPanel, BorderLayout.SOUTH);
