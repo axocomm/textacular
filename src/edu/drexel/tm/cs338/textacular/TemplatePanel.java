@@ -1,11 +1,5 @@
 package edu.drexel.tm.cs338.textacular;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.text.JTextComponent;
