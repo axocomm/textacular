@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -59,6 +62,7 @@ class ImagePanel extends JPanel {
 	
 	public void zoomIn() {
 		zoom += percentage;
+		repaint();
 	}
 	
 	public void zoomOut() {
@@ -70,24 +74,44 @@ class ImagePanel extends JPanel {
 				zoomIn();
 			}
 		}
+		
+		repaint();
 	}
 }
 
 public class PreviewPanel extends JPanel {
+	protected static final int WIDTH = 600;
+	protected static final int HEIGHT = 640;
+	
 	private Image image;
 	
-	private ImageIcon icon;
-	
-	private JLabel label;
+	private JButton btnZoomIn;
+	private JButton btnZoomOut;
 	
 	private ImagePanel imagePanel;
 	
 	public PreviewPanel() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(500, 768));
-		imagePanel = new ImagePanel(image, 10.0, 500, 768);
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		imagePanel = new ImagePanel(image, 10.0, WIDTH, HEIGHT);
+		
+		btnZoomIn = new JButton("+");
+		btnZoomIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imagePanel.zoomIn();
+			}
+		});
+		
+		btnZoomOut = new JButton("-");
+		btnZoomOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imagePanel.zoomOut();
+			}
+		});
 		
 		add(imagePanel);
+		add(btnZoomIn);
+		add(btnZoomOut);
 	}
 	
 	public void refresh() {

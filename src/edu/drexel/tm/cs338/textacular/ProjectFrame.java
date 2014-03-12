@@ -30,12 +30,12 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	/**
 	 * The width of the frame.
 	 */
-	protected static final int WIDTH = 1024;
+	protected static final int WIDTH = 1200;
 	
 	/**
 	 * The height of the frame.
 	 */
-	protected static final int HEIGHT = 768;
+	protected static final int HEIGHT = 800;
 	
 	/**
 	 * The menu bar.
