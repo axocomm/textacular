@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -118,6 +119,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		buttonsPanel.add(btnOptions, "gapleft 30");
 		
 		previewPanel = new PreviewPanel();
+		previewPanel.setBorder(new EmptyBorder(3, 3, 3, 30));
 		
 		add(templatesPanel);
 		add(buttonsPanel, BorderLayout.SOUTH);

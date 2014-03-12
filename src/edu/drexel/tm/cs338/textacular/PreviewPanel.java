@@ -19,6 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
+
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 
@@ -90,7 +92,10 @@ public class PreviewPanel extends JPanel {
 	
 	private ImagePanel imagePanel;
 	
+	private JPanel buttonsPanel;
+	
 	public PreviewPanel() {
+		super(new MigLayout());
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		imagePanel = new ImagePanel(image, 10.0, WIDTH, HEIGHT);
@@ -109,9 +114,14 @@ public class PreviewPanel extends JPanel {
 			}
 		});
 		
+		buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(Color.WHITE);
+		
+		buttonsPanel.add(btnZoomIn);
+		buttonsPanel.add(btnZoomOut);
+		
 		add(imagePanel);
-		add(btnZoomIn);
-		add(btnZoomOut);
+		add(buttonsPanel, "dock south");
 	}
 	
 	public void refresh() {
