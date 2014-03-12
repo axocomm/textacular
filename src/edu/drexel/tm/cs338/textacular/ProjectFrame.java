@@ -28,6 +28,16 @@ import net.miginfocom.swing.MigLayout;
 public class ProjectFrame extends JFrame implements ActionListener {
 	
 	/**
+	 * The width of the frame.
+	 */
+	protected static final int WIDTH = 1024;
+	
+	/**
+	 * The height of the frame.
+	 */
+	protected static final int HEIGHT = 768;
+	
+	/**
 	 * The menu bar.
 	 */
 	private JMenuBar menuBar;
@@ -114,7 +124,7 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		add(new JScrollPane(previewPanel), BorderLayout.EAST);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1024, 768);
+		setSize(WIDTH, HEIGHT);
 	}
 	
 	/**
