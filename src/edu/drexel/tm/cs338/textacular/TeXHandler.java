@@ -128,12 +128,14 @@ public class TeXHandler {
 	
 	/**
 	 * Compile the TeX file.
+	 * 
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
 	protected void compile() throws IOException, InterruptedException {
 		System.out.println(texFile.getAbsolutePath());
-		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -jobname=%s/%s %s", OUTDIR, JOBNAME, texFile.getAbsolutePath()));
+		Process p = Runtime.getRuntime().exec(String.format("latexmk -gg -pdf -pdflatex='pdflatex -interaction=nonstopmode' -jobname=%s/%s %s", 
+				OUTDIR, JOBNAME, texFile.getAbsolutePath()));
 		p.waitFor();
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
