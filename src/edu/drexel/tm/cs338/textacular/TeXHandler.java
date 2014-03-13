@@ -67,6 +67,7 @@ public class TeXHandler {
 		this.filename = filename;
 		
 		templateContents = checkTemplateFile() ? readTemplateFile() : "";
+		prepareOutputDir();
 		texFile = null;
 	}
 	
@@ -104,6 +105,16 @@ public class TeXHandler {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(texFile)));
 		bw.write(newContents);
 		bw.close();
+	}
+	
+	/**
+	 * Prepare the output directory.
+	 */
+	protected void prepareOutputDir() {
+		File outputDir = new File(OUTDIR);
+		if (!(outputDir.exists() && outputDir.isDirectory())) {
+			outputDir.mkdir();
+		}
 	}
 	
 	/**
