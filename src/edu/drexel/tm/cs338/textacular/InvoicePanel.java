@@ -12,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -143,6 +145,14 @@ class InvoiceRowTableModel extends AbstractTableModel {
 		}
 	}
 	
+	public Object getRow(int row) {
+		if (row < data.size()) {
+			return data.get(row);
+		}
+		
+		return null;
+	}
+	
 	@Override
 	public void setValueAt(Object val, int row, int col) {
 		HourRow hourRow = (HourRow) val;
@@ -150,6 +160,11 @@ class InvoiceRowTableModel extends AbstractTableModel {
 		fireTableCellUpdated(row, col);
 	}
 	
+	/**
+	 * Remove a value from the model.
+	 * 
+	 * @param row the row
+	 */
 	public void removeValueAt(int row) {
 		if (row < data.size()) {
 			data.remove(row);
@@ -327,6 +342,17 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		tableModel = new InvoiceRowTableModel();
 		// tableModel.addTableModelListener(l);
 		tblEntries.setModel(tableModel);
+		tblEntries.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int selected = tblEntries.getSelectedRow();
+				if (selected > -1) {
+					HourRow hourRow = (HourRow) tableModel.getRow(selected);
+					txtRowNote.setText(hourRow.getNote());
+					txtRowHours.setText(Double.toString(hourRow.getHours()));
+				}
+			}
+		});
 		
 		lblRowNote = new JLabel("Note");
 		lblRowHours = new JLabel("Hours");
