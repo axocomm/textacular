@@ -1,5 +1,6 @@
 \documentclass[style=paintings]{powerdot}
 
+\usepackage[font=small,labelformat=empty]{caption}
 \usepackage{graphicx}
 
 \title{\TeX tacular}
@@ -27,7 +28,12 @@
 \begin{slide}{Implementation}
   \twocolumn{
     \begin{figure}
+      \caption{Initial view}
       \includegraphics[width=0.9\textwidth]{screens/one.eps}
+    \end{figure}
+    \vspace{-40px}
+    \begin{figure}
+      \caption{View after generating an invoice}
       \includegraphics[width=0.9\textwidth]{screens/two.eps}
     \end{figure}
   }{
@@ -39,7 +45,8 @@
       \item A \texttt{TeXHandler} class handles compilation of \TeX\
         source
         \begin{itemize}
-          \item Uses \texttt{latexmk} and a script to compile
+          \item Uses \texttt{latexmk} and a script (\texttt{res/bin/compile})
+            to compile
         \end{itemize}
       \item \texttt{PreviewPanel} updates automatically with the
         contents of the compiled PDF
@@ -74,6 +81,7 @@
       \item Improve scaling of PDF preview
       \item Add ``Save'', ``Load'', ``Print'' options
       \item Add Windows support
+      \item Add options dialogue for font/package selection and paper size
     \end{itemize}
   }
 \end{slide}
