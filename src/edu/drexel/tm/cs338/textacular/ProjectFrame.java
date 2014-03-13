@@ -1,9 +1,12 @@
 package edu.drexel.tm.cs338.textacular;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -88,10 +91,15 @@ public class ProjectFrame extends JFrame implements ActionListener {
 	private JButton btnOptions;
 	
 	/**
+	 * The view button.
+	 */
+	private JButton btnView;
+	
+	/**
 	 * The template panels.
 	 */
 	private TemplatePanel[] panels = { 
-			new LetterPanel(), new ArticlePanel() };
+			new LetterPanel(), new ArticlePanel(), new InvoicePanel() };
 	
 	/**
 	 * Instantiate a new ProjectFrame.
@@ -108,14 +116,18 @@ public class ProjectFrame extends JFrame implements ActionListener {
 		(btnCompile = new JButton("Compile")).addActionListener(this);
 		(btnClear = new JButton("Clear")).addActionListener(this);
 		(btnOptions = new JButton("Options")).addActionListener(this);
+		(btnView = new JButton("View")).addActionListener(this);
+		
+		btnView.setEnabled(false);
 		
 		templatesPanel = new JPanel(new MigLayout());
 		templatesPanel.add(tabbedPane);
 		
-		buttonsPanel = new JPanel(new MigLayout());
+		buttonsPanel = new JPanel(new MigLayout("wrap 4"));
 		buttonsPanel.add(btnCompile);
+		buttonsPanel.add(btnView);
 		buttonsPanel.add(btnClear);
-		buttonsPanel.add(btnOptions, "gapleft 30");
+		buttonsPanel.add(btnOptions);
 		
 		previewPanel = new PreviewPanel();
 		previewPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -159,10 +171,12 @@ public class ProjectFrame extends JFrame implements ActionListener {
 					if (panel.compile()) {
 						System.out.println("Success");
 						((PreviewPanel) previewPanel).refresh();
+						btnView.setEnabled(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Could not prepare TeX file.",
 							"Template Error", JOptionPane.ERROR_MESSAGE);
+					btnView.setEnabled(false);
 				}
 			}
 		} else if (e.getSource() == btnClear) {
@@ -170,6 +184,21 @@ public class ProjectFrame extends JFrame implements ActionListener {
 			panel.resetInputs();
 		} else if (e.getSource() == btnOptions) {
 			System.out.println("Options pressed");
+		} else if (e.getSource() == btnView) {
+			File outputFile = new File(((PreviewPanel) previewPanel).getOutputFilename());
+			if (!outputFile.exists()) {
+				JOptionPane.showMessageDialog(this, "Could not open PDF.",
+						"View Error", JOptionPane.ERROR_MESSAGE);
+			} else {
+				Desktop dt = Desktop.getDesktop();
+				try {
+					dt.open(outputFile);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(this, "Could not open PDF.",
+							"View Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		} else if (e.getSource() == itmQuit) {
 			for (TemplatePanel panel : panels) {
 				panel.cleanup();

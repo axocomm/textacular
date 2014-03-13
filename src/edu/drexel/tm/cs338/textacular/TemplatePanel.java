@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
@@ -231,6 +232,8 @@ public abstract class TemplatePanel extends JPanel {
 	protected boolean checkInput(JComponent input) {
 		if (input instanceof JTextComponent) {
 			return checkInput((JTextComponent) input);
+		} else if (input instanceof JTable) {
+			return checkInput((JTable) input);
 		} else {
 			return false;
 		}
@@ -241,5 +244,12 @@ public abstract class TemplatePanel extends JPanel {
 	 */
 	protected boolean checkInput(JTextComponent input) {
 		return input.getText().length() > 0;
+	}
+	
+	/**
+	 * Check a table input.
+	 */
+	protected boolean checkInput(JTable input) {
+		return input.getModel().getRowCount() > 0;
 	}
 }

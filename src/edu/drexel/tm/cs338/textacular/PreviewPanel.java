@@ -33,6 +33,11 @@ import com.sun.pdfview.PDFPage;
 public class PreviewPanel extends JPanel {
 	
 	/**
+	 * The output filename.
+	 */
+	protected static final String OUTPUT_FILENAME = "res/output/output.pdf";
+	
+	/**
 	 * The panel width.
 	 */
 	protected static final int WIDTH = 600;
@@ -58,6 +63,16 @@ public class PreviewPanel extends JPanel {
 	private JButton btnZoomOut;
 	
 	/**
+	 * The next page button.
+	 */
+	private JButton btnNext;
+	
+	/**
+	 * The previous page button.
+	 */
+	private JButton btnPrevious;
+	
+	/**
 	 * The image panel.
 	 */
 	private ImagePanel imagePanel;
@@ -68,12 +83,24 @@ public class PreviewPanel extends JPanel {
 	private JPanel buttonsPanel;
 	
 	/**
+	 * The page number.
+	 */
+	private int pageNo;
+	
+	/**
+	 * The number of pages.
+	 */
+	private int nPages;
+	
+	/**
 	 * Instantiate a new PreviewPanel.
 	 */
 	public PreviewPanel() {
 		super(new MigLayout());
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		imagePanel = new ImagePanel(image, 10.0, WIDTH, HEIGHT);
+		
+		nPages = -1;
 		
 		btnZoomIn = new JButton("+");
 		btnZoomIn.addActionListener(new ActionListener() {
@@ -89,10 +116,30 @@ public class PreviewPanel extends JPanel {
 			}
 		});
 		
+		btnNext = new JButton("->");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (nPages > 0) {
+					nextPage();
+				}
+			}
+		});
+		
+		btnPrevious = new JButton("<-");
+		btnPrevious.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (nPages > 0) {
+					previousPage();
+				}
+			}
+		});
+		
 		buttonsPanel = new JPanel();
 		
+		buttonsPanel.add(btnPrevious);
 		buttonsPanel.add(btnZoomIn);
 		buttonsPanel.add(btnZoomOut);
+		buttonsPanel.add(btnNext);
 		
 		JScrollPane previewScrollPane = new JScrollPane(imagePanel);
 		previewScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
@@ -117,13 +164,38 @@ public class PreviewPanel extends JPanel {
 	}
 	
 	/**
+	 * Go to the next page.
+	 */
+	public void nextPage() {
+		if (pageNo == nPages) {
+			pageNo = 1;
+		} else {
+			pageNo++;
+		}
+		
+		refresh();
+	}
+	
+	/**
+	 * Go to the previous page.
+	 */
+	public void previousPage() {
+		if (pageNo == 1) {
+			pageNo = nPages;
+		} else {
+			pageNo--;
+		}
+		
+		refresh();
+	}
+	
+	/**
 	 * Load a PDF into a BufferedImage.
 	 * 
 	 * @return if the process was successful
 	 */
 	protected boolean loadPdf() {
-		String filename = "res/output/output.pdf";
-		File f = new File(filename);
+		File f = new File(OUTPUT_FILENAME);
 		if (f.exists() && !f.isDirectory()) {
 			try {
 				RandomAccessFile raf = new RandomAccessFile(f, "r");
@@ -131,9 +203,9 @@ public class PreviewPanel extends JPanel {
 				ByteBuffer buf = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
 				PDFFile pdfFile = new PDFFile(buf);
 				
-				int nPages = pdfFile.getNumPages();
+				nPages = pdfFile.getNumPages();
 				System.out.println(nPages);
-				PDFPage page = pdfFile.getPage(1);
+				PDFPage page = pdfFile.getPage(pageNo);
 				Rectangle2D r2d = page.getBBox();
 				
 				double w = r2d.getWidth();
@@ -169,6 +241,14 @@ public class PreviewPanel extends JPanel {
 		g2d.dispose();
 		
 		return bi;
-		
+	}
+	
+	/**
+	 * Get the output PDF filename.
+	 * 
+	 * @return the output PDF filename
+	 */
+	protected String getOutputFilename() {
+		return OUTPUT_FILENAME;
 	}
 }
