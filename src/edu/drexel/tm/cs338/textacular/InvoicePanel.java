@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -459,5 +461,26 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		txtRowHours.setText("");
 		tableModel.empty();
 		super.resetInputs();
+	}
+	
+	@Override
+	protected String getStringValue(JComponent input) {
+		if (input instanceof JTextComponent) {
+			return getStringValue((JTextComponent) input);
+		} else if (input instanceof JTable) {
+			return getStringValue((JTable) input);
+		} else {
+			return "NONE";
+		}
+	}
+	
+	protected String getStringValue(JTable table) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < table.getModel().getRowCount(); i++) {
+			HourRow row = (HourRow) ((InvoiceRowTableModel) tableModel).getRow(i);
+			sb.append(String.format("\\hourrow{%s}{%.2f}{%s}", row.getNote(), row.getHours(), txtRate.getText()));
+		}
+		
+		return sb.toString();
 	}
 }
