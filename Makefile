@@ -15,3 +15,4 @@ bin:
 
 clean:
 	@rm -rf bin/*
+	@rm -rf res/output/*
