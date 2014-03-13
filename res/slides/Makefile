@@ -1,12 +1,14 @@
 TEXFILE = slides
 
-.PHONY: all dvi pdf clean
+.PHONY: all dvi pdf rotate clean
 
 all: dvi pdf ps
 
 dvi: $(TEXFILE).dvi
 ps: $(TEXFILE).ps
 pdf: $(TEXFILE).pdf
+
+DISTDIR = dist
 
 $(TEXFILE).dvi: $(TEXFILE).tex
 	( \
@@ -21,6 +23,9 @@ $(TEXFILE).ps: $(TEXFILE).dvi
 
 $(TEXFILE).pdf: $(TEXFILE).ps
 	ps2pdf -dPDFSETTINGS=/prepress $<
+
+rotate: $(TEXFILE).pdf
+	pdftk $< cat 1-endR output $(DISTDIR)/$<
 
 clean:
 	@rm -f $(TEXFILE).aux $(TEXFILE).log $(TEXFILE).out
