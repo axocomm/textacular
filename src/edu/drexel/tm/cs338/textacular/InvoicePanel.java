@@ -1,5 +1,6 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -126,6 +127,11 @@ class InvoiceRowTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		return columnNames.length;
+	}
+	
+	@Override
+	public String getColumnName(int col) {
+		return columnNames[col];
 	}
 
 	@Override
@@ -363,6 +369,8 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 				}
 			}
 		});
+		
+		tblEntries.setPreferredScrollableViewportSize(new Dimension(200, 200));
 		
 		lblRowNote = new JLabel("Note");
 		lblRowHours = new JLabel("Hours");
