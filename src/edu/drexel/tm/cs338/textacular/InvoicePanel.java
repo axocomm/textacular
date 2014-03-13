@@ -1,6 +1,7 @@
 package edu.drexel.tm.cs338.textacular;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -324,6 +325,11 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 	private JPanel rowEditPanel;
 	
 	/**
+	 * The edit buttons panel.
+	 */
+	private JPanel editButtonsPanel;
+	
+	/**
 	 * The entries table.
 	 */
 	private JTable tblEntries;
@@ -382,15 +388,19 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		(btnEditRow = new JButton("Edit")).addActionListener(this);
 		(btnRemoveRow = new JButton("Remove")).addActionListener(this);
 		
+		editButtonsPanel = new JPanel();
+		editButtonsPanel.setLayout(new GridLayout(1, 3, 5, 5));
+		editButtonsPanel.add(btnAddRow);
+		editButtonsPanel.add(btnEditRow);
+		editButtonsPanel.add(btnRemoveRow);
+		
 		rowEditPanel = new JPanel(new MigLayout("wrap 4"));
 		rowEditPanel.add(new JScrollPane(tblEntries), "span");
 		rowEditPanel.add(lblRowNote);
 		rowEditPanel.add(txtRowNote, "wrap");
 		rowEditPanel.add(lblRowHours);
-		rowEditPanel.add(txtRowHours, "wrap");
-		rowEditPanel.add(btnAddRow);
-		rowEditPanel.add(btnEditRow);
-		rowEditPanel.add(btnRemoveRow);
+		rowEditPanel.add(txtRowHours);
+		rowEditPanel.add(editButtonsPanel, "wrap");
 		
 		add(lblCompany);
 		add(txtCompany);
