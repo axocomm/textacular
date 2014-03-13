@@ -33,6 +33,11 @@ import com.sun.pdfview.PDFPage;
 public class PreviewPanel extends JPanel {
 	
 	/**
+	 * The output filename.
+	 */
+	protected static final String OUTPUT_FILENAME = "res/output/output.pdf";
+	
+	/**
 	 * The panel width.
 	 */
 	protected static final int WIDTH = 600;
@@ -190,8 +195,7 @@ public class PreviewPanel extends JPanel {
 	 * @return if the process was successful
 	 */
 	protected boolean loadPdf() {
-		String filename = "res/output/output.pdf";
-		File f = new File(filename);
+		File f = new File(OUTPUT_FILENAME);
 		if (f.exists() && !f.isDirectory()) {
 			try {
 				RandomAccessFile raf = new RandomAccessFile(f, "r");
@@ -237,6 +241,14 @@ public class PreviewPanel extends JPanel {
 		g2d.dispose();
 		
 		return bi;
-		
+	}
+	
+	/**
+	 * Get the output PDF filename.
+	 * 
+	 * @return the output PDF filename
+	 */
+	protected String getOutputFilename() {
+		return OUTPUT_FILENAME;
 	}
 }
