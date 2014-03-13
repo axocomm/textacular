@@ -22,6 +22,6 @@ fi
 path="$1"
 src="$2"
 
-$PREFIX/latexmk -gg -pdf -pdflatex="$PREFIX/pdflatex -interaction=nonstopmode" -jobname=$path $src
+TEXINPUTS='res/document-classes/:' $PREFIX/latexmk -gg -pdf -pdflatex="$PREFIX/pdflatex -interaction=nonstopmode" -jobname=$path $src
 
 exit $?
