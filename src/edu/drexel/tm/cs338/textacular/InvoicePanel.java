@@ -370,7 +370,7 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 			}
 		});
 		
-		tblEntries.setPreferredScrollableViewportSize(new Dimension(200, 200));
+		tblEntries.setPreferredScrollableViewportSize(new Dimension(540, 200));
 		
 		lblRowNote = new JLabel("Note");
 		lblRowHours = new JLabel("Hours");
@@ -383,8 +383,9 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		(btnRemoveRow = new JButton("Remove")).addActionListener(this);
 		
 		rowEditPanel = new JPanel(new MigLayout("wrap 4"));
+		rowEditPanel.add(new JScrollPane(tblEntries), "span");
 		rowEditPanel.add(lblRowNote);
-		rowEditPanel.add(txtRowNote);
+		rowEditPanel.add(txtRowNote, "wrap");
 		rowEditPanel.add(lblRowHours);
 		rowEditPanel.add(txtRowHours, "wrap");
 		rowEditPanel.add(btnAddRow);
@@ -404,7 +405,6 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		add(lblRate);
 		add(txtRate, "wrap");
 		add(lblEntries);
-		add(new JScrollPane(tblEntries), "wrap");
 		add(rowEditPanel, "dock south");
 	}
 
