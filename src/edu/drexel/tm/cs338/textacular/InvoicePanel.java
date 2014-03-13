@@ -1,13 +1,19 @@
 package edu.drexel.tm.cs338.textacular;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+
+import net.miginfocom.swing.MigLayout;
 
 /**
  * The class HourRow.
@@ -110,7 +116,6 @@ class InvoiceRowTableModel extends AbstractTableModel {
 	 */
 	public InvoiceRowTableModel() {
 		data = new ArrayList<HourRow>();
-		data.add(new HourRow("Foo", 10.0));
 	}
 	
 	@Override
@@ -162,7 +167,7 @@ class InvoiceRowTableModel extends AbstractTableModel {
  * 
  * @author Trevor Maglione <tm@cs.drexel.edu>
  */
-public class InvoicePanel extends TemplatePanel {
+public class InvoicePanel extends TemplatePanel implements ActionListener {
 	
 	/**
 	 * The template name.
@@ -210,6 +215,16 @@ public class InvoicePanel extends TemplatePanel {
 	private JLabel lblEntries;
 	
 	/**
+	 * The row note label.
+	 */
+	private JLabel lblRowNote;
+	
+	/**
+	 * The row hours label.
+	 */
+	private JLabel lblRowHours;
+	
+	/**
 	 * The company text field.
 	 */
 	private JTextField txtCompany;
@@ -230,6 +245,16 @@ public class InvoicePanel extends TemplatePanel {
 	private JTextField txtRate;
 	
 	/**
+	 * The row note text field.
+	 */
+	private JTextField txtRowNote;
+	
+	/**
+	 * The row hours text field.
+	 */
+	private JTextField txtRowHours;
+	
+	/**
 	 * The address text area.
 	 */
 	private JTextArea txtAddress;
@@ -238,6 +263,26 @@ public class InvoicePanel extends TemplatePanel {
 	 * The addressee address text area.
 	 */
 	private JTextArea txtToAddress;
+	
+	/**
+	 * The add row button.
+	 */
+	private JButton btnAddRow;
+	
+	/**
+	 * The edit row button.
+	 */
+	private JButton btnEditRow;
+	
+	/**
+	 * The remove row button.
+	 */
+	private JButton btnRemoveRow;
+	
+	/**
+	 * The row edit panel.
+	 */
+	private JPanel rowEditPanel;
 	
 	/**
 	 * The entries table.
@@ -274,7 +319,25 @@ public class InvoicePanel extends TemplatePanel {
 		tableModel = new InvoiceRowTableModel();
 		// tableModel.addTableModelListener(l);
 		tblEntries.setModel(tableModel);
-		tableModel.insert(new HourRow("bar", 12.0));
+		
+		lblRowNote = new JLabel("Note");
+		lblRowHours = new JLabel("Hours");
+		
+		txtRowNote = new JTextField(20);
+		txtRowHours = new JTextField(20);
+		
+		(btnAddRow = new JButton("Add")).addActionListener(this);
+		(btnEditRow = new JButton("Edit")).addActionListener(this);
+		(btnRemoveRow = new JButton("Remove")).addActionListener(this);
+		
+		rowEditPanel = new JPanel(new MigLayout("wrap 4"));
+		rowEditPanel.add(lblRowNote);
+		rowEditPanel.add(txtRowNote);
+		rowEditPanel.add(lblRowHours);
+		rowEditPanel.add(txtRowHours, "wrap");
+		rowEditPanel.add(btnAddRow);
+		rowEditPanel.add(btnEditRow);
+		rowEditPanel.add(btnRemoveRow);
 		
 		add(lblCompany);
 		add(txtCompany);
@@ -290,5 +353,12 @@ public class InvoicePanel extends TemplatePanel {
 		add(txtRate, "wrap");
 		add(lblEntries);
 		add(new JScrollPane(tblEntries), "wrap");
+		add(rowEditPanel, "dock south");
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
