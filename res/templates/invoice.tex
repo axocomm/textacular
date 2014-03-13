@@ -1,0 +1,22 @@
+\documentclass{invoice}
+
+\def \tab {\hspace*{3ex}}
+
+\begin{document}
+\hfil{\Huge\bf :company:}\hfil
+\bigskip\break
+\hrule
+
+:address:
+\\ \\
+   {\bf Invoice To:} \\
+   \tab :to: \\ % Invoice recipient
+
+   {\bf Date:} \\
+   \tab :date: \\
+
+   \begin{invoiceTable}
+     :entries:
+     \subtotal
+   \end{invoiceTable}
+\end{document}
