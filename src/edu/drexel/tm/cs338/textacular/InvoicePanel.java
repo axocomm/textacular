@@ -181,6 +181,14 @@ class InvoiceRowTableModel extends AbstractTableModel {
 		data.add(hourRow);
 		this.fireTableRowsInserted(data.size() - 1, data.size() - 1);
 	}
+	
+	/**
+	 * Empty the data list.
+	 */
+	public void empty() {
+		data = new ArrayList<HourRow>();
+		this.fireTableRowsDeleted(0, 0);
+	}
 }
 
 /**
@@ -398,16 +406,26 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 				double hours = Double.parseDouble(txtRowHours.getText());
 				HourRow hourRow = new HourRow(note, hours);
 				tableModel.insert(hourRow);
+				
+				txtRowNote.setText("");
+				txtRowHours.setText("");
 			} else {
 				JOptionPane.showMessageDialog(this, "Invalid input");
 			}
 		} else if (e.getSource() == btnEditRow) {
 			int selected = tblEntries.getSelectedRow();
-			if (selected > -1 && checkRowInputs()) {
-				String note = txtRowNote.getText();
-				double hours = Double.parseDouble(txtRowHours.getText());
-				HourRow hourRow = new HourRow(note, hours);
-				tableModel.setValueAt(hourRow, selected, -1);
+			if (selected > -1) {
+				if (checkInputs()) {
+					String note = txtRowNote.getText();
+					double hours = Double.parseDouble(txtRowHours.getText());
+					HourRow hourRow = new HourRow(note, hours);
+					tableModel.setValueAt(hourRow, selected, -1);
+					
+					txtRowNote.setText("");
+					txtRowHours.setText("");
+				} else {
+					JOptionPane.showMessageDialog(this, "Invalid input");
+				}
 			}
 		} else if (e.getSource() == btnRemoveRow) {
 			int selected = tblEntries.getSelectedRow();
@@ -417,6 +435,11 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Check the row inputs.
+	 * 
+	 * @return if both inputs are filled and valid
+	 */
 	private boolean checkRowInputs() {
 		if (txtRowNote.getText().length() <= 0 || txtRowHours.getText().length() <= 0) {
 			return false;
@@ -428,5 +451,13 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	@Override
+	public void resetInputs() {
+		txtRowNote.setText("");
+		txtRowHours.setText("");
+		tableModel.empty();
+		super.resetInputs();
 	}
 }
