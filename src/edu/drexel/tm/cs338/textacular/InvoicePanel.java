@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -149,6 +150,13 @@ class InvoiceRowTableModel extends AbstractTableModel {
 		fireTableCellUpdated(row, col);
 	}
 	
+	public void removeValueAt(int row) {
+		if (row < data.size()) {
+			data.remove(row);
+			fireTableRowsDeleted(row, row);
+		}
+	}
+	
 	/**
 	 * Insert an HourRow at the end of the data.
 	 * 
@@ -156,7 +164,7 @@ class InvoiceRowTableModel extends AbstractTableModel {
 	 */
 	public void insert(HourRow hourRow) {
 		data.add(hourRow);
-		fireTableCellUpdated(data.size() - 1, -1);
+		this.fireTableRowsInserted(data.size() - 1, data.size() - 1);
 	}
 }
 
@@ -358,7 +366,41 @@ public class InvoicePanel extends TemplatePanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == btnAddRow) {
+			if (checkRowInputs()) {
+				String note = txtRowNote.getText();
+				double hours = Double.parseDouble(txtRowHours.getText());
+				HourRow hourRow = new HourRow(note, hours);
+				tableModel.insert(hourRow);
+			} else {
+				JOptionPane.showMessageDialog(this, "Invalid input");
+			}
+		} else if (e.getSource() == btnEditRow) {
+			int selected = tblEntries.getSelectedRow();
+			if (selected > -1 && checkRowInputs()) {
+				String note = txtRowNote.getText();
+				double hours = Double.parseDouble(txtRowHours.getText());
+				HourRow hourRow = new HourRow(note, hours);
+				tableModel.setValueAt(hourRow, selected, -1);
+			}
+		} else if (e.getSource() == btnRemoveRow) {
+			int selected = tblEntries.getSelectedRow();
+			if (selected > -1) {
+				tableModel.removeValueAt(selected);
+			}
+		}
+	}
+	
+	private boolean checkRowInputs() {
+		if (txtRowNote.getText().length() <= 0 || txtRowHours.getText().length() <= 0) {
+			return false;
+		}
 		
+		try {
+			Double.parseDouble(txtRowHours.getText());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 }
